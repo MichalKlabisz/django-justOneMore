@@ -5,6 +5,8 @@ import os.path
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+ABSOLUTE_PATH = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x) 
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -14,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': ABSOLUTE_PATH('../sqlite.db'),  # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -52,7 +54,7 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/media/"
 #MEDIA_ROOT = ''
 
-ABSOLUTE_PATH = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)     
+    
 MEDIA_ROOT = ABSOLUTE_PATH('../website/media/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a

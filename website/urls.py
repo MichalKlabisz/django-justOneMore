@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.views.generic.list import ListView
 from website.models import Image
 from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
+from website.views import NewestView
 
 urlpatterns = patterns('',
     # Examples:
@@ -19,10 +21,7 @@ urlpatterns = patterns('',
     #                                        model=Image
     #                                         )
     #    ),
-    #url(r'^$', ListView.as_view(
-    #                            queryset=Image.objects.all(),
-    #                            template_name='home.html'
-    #                           )
-    #    ),
+    url(r'^$', NewestView.as_view()
+        ),
     
 )
