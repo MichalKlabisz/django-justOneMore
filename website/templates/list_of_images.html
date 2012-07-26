@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<ol>
+	
       {% for image in page_obj %}
-        <li>{{ image.title }}</li>
+        <div><a href="/img/{{ image.slug }}"><img src="/media/{{ image.image }}" alt="{{ image.title }}"/></a></div>
       {% endfor %}
-    </ol>
+    
 
     <div class="pagination">
         <span class="step-links">

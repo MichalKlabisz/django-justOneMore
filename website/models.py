@@ -5,8 +5,9 @@ from django.utils.datetime_safe import datetime
 class Image(models.Model):
     title = models.CharField(max_length=50)
     pub_date = models.DateTimeField()
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
     slug = models.SlugField(max_length=50, unique=True)
+    #points = models.IntegerField(editable=False)
     image = models.ImageField(upload_to='images/%Y-%m-%d')
     
     def __unicode__(self):

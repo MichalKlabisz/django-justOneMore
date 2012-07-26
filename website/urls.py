@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from website.models import Image
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-from website.views import NewestView
+from website.views import NewestView, Top100View
 
 urlpatterns = patterns('',
     # Examples:
@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     #                                        model=Image
     #                                         )
     #    )
-    url(r'^$', NewestView.as_view()
-        ),
+    url(r'^$', NewestView.as_view()),
+    url(r'^top100$', Top100View.as_view()),
     
 )
