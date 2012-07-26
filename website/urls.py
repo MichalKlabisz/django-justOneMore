@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     #                                        template_name='detail.html',
     #                                        model=Image
     #                                         )
-    #    ),
+    #    )
     url(r'^$', NewestView.as_view()
         ),
     
