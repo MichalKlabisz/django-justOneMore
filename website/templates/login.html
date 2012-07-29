@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block content %}
+	<h2>Login:</h2>
+	{% if user.is_authenticated %}
+    	<p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+	{% else %}
+    	{% if form.errors %}
+            <p style="color: red;">
+                Your username or password are invalid.
+            </p>
+        {% endif %}
+ 
+        <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        	{% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Login">
+            
+        </form>
+	{% endif %}
+      	
+{% endblock %}

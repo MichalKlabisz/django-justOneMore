@@ -1,8 +1,8 @@
 
 from django.views.generic.list import ListView
 from website.models import Image
-from django.views.generic.edit import CreateView
-from website.forms import UploadForm
+from django.views.generic.edit import CreateView, FormView
+from website.forms import UploadForm, LoginForm
 
 def_pagination = 10
 
@@ -38,5 +38,16 @@ class UploadView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UploadView, self).get_context_data(**kwargs)
         context['selected_page'] = 'upload'
+        
+        return context
+    
+class LoginView(FormView):
+    template_name = 'login.html'
+    form_class = LoginForm
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context['selected_page'] = 'login'
         
         return context
