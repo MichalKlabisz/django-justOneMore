@@ -88,6 +88,7 @@ ol li
 { margin-left: auto; 
   margin-right: auto;}
   
+<<<<<<< HEAD
 #menuwrapper
 {
 	width: 877px;
@@ -101,6 +102,12 @@ ol li
   /*height: 72px;*/
   padding: 0;
 } 
+=======
+#menubar 
+{
+  float: left;
+}
+>>>>>>> c2a6c2de2afc3711e6d1a4a000cfb6e57844417a
 
 #search
 {
