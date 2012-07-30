@@ -88,7 +88,7 @@ ol li
 { margin-left: auto; 
   margin-right: auto;}
   
-<<<<<<< HEAD
+
 #menuwrapper
 {
 	width: 877px;
@@ -102,12 +102,7 @@ ol li
   /*height: 72px;*/
   padding: 0;
 } 
-=======
-#menubar 
-{
-  float: left;
-}
->>>>>>> c2a6c2de2afc3711e6d1a4a000cfb6e57844417a
+
 
 #search
 {
@@ -208,7 +203,7 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 
 #content
 { text-align: left;
-  width: 595px;
+  width: 837px;
   padding: 0;}
 
 #content ul
@@ -224,6 +219,11 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 #content img
 {
 	max-width: 590px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #footer
