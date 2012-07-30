@@ -2,7 +2,7 @@
 
 {% block content %}
       <h3> {{ image.title }}</h3>
-        <h4> Author: Date: {{ image.pub_date }}</h4>
+        <h4> Sent by: <b>{{ user }}</b> | Date: {{ image.pub_date }}</h4>
         <h5> {{ image.description }} </h5>
         <a href="/media/{{ image.image }}"><img src="/media/{{ image.image }}" alt="{{ image.title }}"/></a>
         

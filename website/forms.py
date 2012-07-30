@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class UploadForm(ModelForm):
     class Meta:
         model = Image
-        exclude = ('pub_date', 'slug')
+        exclude = ('pub_date', 'slug', 'sent_by')
     
     #def handle_uploaded_file(self, f):
     #    with open(f.name, 'wb+') as destination:

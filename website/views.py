@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView, FormView
 from website.forms import UploadForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login
+from django.http import HttpResponseRedirect
 
 def_pagination = 10
 
@@ -54,6 +56,14 @@ class UploadView(CreateView):
         
         return context
     
+    def form_valid(self, form):
+        img = form.save(commit=False)
+        img.sent_by = self.request.user
+        img.save()    
+        form.save_m2m()    
+        self.object = img
+        return HttpResponseRedirect(self.get_success_url())
+    
 class LoginView(FormView):
     template_name = 'login.html'
     #form_class = LoginForm
@@ -65,6 +75,10 @@ class LoginView(FormView):
         context['selected_page'] = 'login'
         
         return context
+    
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return HttpResponseRedirect(self.get_success_url())
 
 class RegisterView(CreateView):
     template_name = 'register.html'

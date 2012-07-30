@@ -4,6 +4,12 @@
 	
       {% for image in page_obj %}
         <div><a href="/img/{{ image.slug }}"><img src="/media/{{ image.image }}" alt="{{ image.title }}"/></a></div>
+      {% empty %}
+        {% if user.is_authenticated %}
+        	No content. Please <a href='/upload'>upload</a> some images.
+        {% else %}
+        	No content. Please <a href='/login'>login</a> or <a href='/register'>register</a> to upload images.
+        {% endif %}
       {% endfor %}
     
 
