@@ -87,6 +87,16 @@ ol li
 #main, #logo, #menubar, #site_content, #footer
 { margin-left: auto; 
   margin-right: auto;}
+  
+#menubar 
+{
+  float: left;
+}
+
+#search
+{
+  float: right;
+}
 
 #header
 { background: #667F03;
@@ -198,6 +208,11 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   margin: 0 0 6px 0; 
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
+  
+#content img
+{
+	max-width: 590px;
+}
 
 #footer
 { width: 878px;

@@ -3,6 +3,7 @@ from django.views.generic.list import ListView
 from website.models import Image
 from django.views.generic.edit import CreateView, FormView
 from website.forms import UploadForm, LoginForm
+from django.views.generic.detail import DetailView
 
 def_pagination = 10
 
@@ -27,6 +28,17 @@ class Top100View(ListView):
         # Call the base implementation first to get a context
         context = super(Top100View, self).get_context_data(**kwargs)
         context['selected_page'] = 'top100'
+        
+        return context
+    
+class DetailsView(DetailView):
+    queryset = Image.objects.all().order_by('-pub_date')
+    template_name = 'details.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(NewestView, self).get_context_data(**kwargs)
+        context['selected_page'] = 'newest'
         
         return context
     
