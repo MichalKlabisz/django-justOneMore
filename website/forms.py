@@ -7,12 +7,13 @@ class UploadForm(ModelForm):
         model = Image
         exclude = ('pub_date', 'slug')
     
-    def handle_uploaded_file(self, f):
-        with open(f.name, 'wb+') as destination:
-            for chunk in f.chunks():
-                destination.write(chunk)
+    #def handle_uploaded_file(self, f):
+    #    with open(f.name, 'wb+') as destination:
+    #        for chunk in f.chunks():
+    #            destination.write(chunk)
                 
-class LoginForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ('username', 'password')
+#class LoginForm(ModelForm):
+#    class Meta:
+#        model = User
+#        fields = ('username', 'password')
+        
