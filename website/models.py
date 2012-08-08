@@ -8,9 +8,9 @@ class Image(models.Model):
     pub_date = models.DateTimeField()
     description = models.CharField(max_length=200, blank=True)
     slug = models.SlugField(max_length=50, unique=True)
-    sent_by = models.ForeignKey(User, editable=False)#, related_name='user_sent_by')
-    #points = models.IntegerField(editable=False, default=0)
-    #who_voted = models.ManyToManyField(User, editable=False, related_name='user_who_voted')
+    sent_by = models.ForeignKey(User, editable=False, related_name='user_sent_by')
+    points = models.IntegerField(editable=False, default=0)
+    who_voted = models.ManyToManyField(User, editable=False, related_name='user_who_voted')
     image = models.ImageField(upload_to='images/%Y-%m-%d')
     
     def __unicode__(self):

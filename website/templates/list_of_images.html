@@ -3,7 +3,12 @@
 {% block content %}
 	
       {% for image in page_obj %}
-        <div><a href="/img/{{ image.slug }}"><img src="/media/{{ image.image }}" alt="{{ image.title }}"/></a></div>
+        <div>
+        	<a href="/img/{{ image.slug }}">
+        		<img src="/media/{{ image.image }}" alt="{{ image.title }}"/>
+        	</a>
+        	<h4> <strong>{{ image.points }} points </strong> </h4>
+        </div>
       {% empty %}
         {% if user.is_authenticated %}
         	No content. Please <a href='/upload'>upload</a> some images.
