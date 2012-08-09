@@ -55,9 +55,10 @@
 	        </ul>
 	      </div>
 	      <div id="search">
-			  <form method="post" action="#" id="search_form">
+			  <form method="post" action="/search/" id="search_form">
+			  {% csrf_token %}
 				  <p>
-					<input class="search" type="text" name="search_field" value="Enter keywords....." />
+					<input id="id_search_field" type="text" name="search_field" maxlength="50" />
 					<input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="/static/css/search.png" alt="Search" title="Search" />
 				  </p>
 			  </form>

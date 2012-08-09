@@ -1,6 +1,8 @@
 from django.forms.models import ModelForm
 from website.models import Image
 from django.contrib.auth.models import User
+from django import forms
+
 
 class UploadForm(ModelForm):
     class Meta:
@@ -17,3 +19,5 @@ class UploadForm(ModelForm):
 #        model = User
 #        fields = ('username', 'password')
         
+class SearchForm(forms.Form):
+    search_field = forms.CharField(max_length=50)
