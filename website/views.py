@@ -1,12 +1,14 @@
-
+from django.db.models import Q
 from django.views.generic.list import ListView
 from website.models import Image
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, FormMixin
 from website.forms import UploadForm, SearchForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
 
 
 def_pagination = 10
@@ -23,26 +25,53 @@ class NewestView(ListView):
         
         return context
     
-class SearchView(FormView):
-    template_name = 'list_of_images.html'
-    form_class = SearchForm
-    paginate_by = def_pagination
-    success_url = '/search/'
-    def get_query_set(self):
-        
+#class SearchView(ListView):
+#    template_name = 'list_of_images.html'
+    #form_class = SearchForm
+#    paginate_by = def_pagination
+    #success_url = '/search/'
+#    context_object_name = 'page_obj'
+#    queryset = Image.objects.all()
     
-        if self.request.method == 'POST': # If the form has been submitted...
-            form = SearchForm(self.request.POST) # A form bound to the POST data
-            if form.is_valid(): # All validation rules pass
+    #def get_queryset(self):
+    #    return Image.objects.all()
+    
+        #if self.request.method == 'POST': # If the form has been submitted...
+        #    form = SearchForm(self.request.POST) # A form bound to the POST data
+        #    if form.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
-                return Image.objects.all()
-                return Image.objects.filter(title__icontains = form.cleaned_data['search_field'])
+       #         return Image.objects.all()
+        #        return Image.objects.filter(title__icontains = form.cleaned_data['search_field'])
         # def get_query_set(self):
         #    return super(MaleManager, self).get_query_set().filter(sex='M')
-        return Image.objects.all()
+        #return Image.objects.all()
 
 
     #return Image.objects.filter(title__icontains = self.REQUEST['search_field'])
+
+def search(request):
+
+    if request.POST:
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['search_field']
+            results = Image.objects.filter(Q(title__iexact = query) | Q(description__icontains = query))
+        else:
+            results = []
+    else:
+        form = SearchForm()
+        results = []
+    
+    #results = Image.objects.all()
+
+
+    return render_to_response(
+        'search.html',
+        RequestContext(request, {
+            'form': form,
+            'search_results': results,
+        })
+    )
     
 class Top100View(ListView):
     queryset = Image.objects.all().order_by('title')

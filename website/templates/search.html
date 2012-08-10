@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	  <h3>Search results:</h3>
+	  
+      {% for image in search_results %}
+        <div>
+        	<a href="/img/{{ image.slug }}">
+        		<img src="/media/{{ image.image }}" alt="{{ image.title }}"/>
+        	</a>
+        	<h4> <strong>{{ image.points }} points </strong> </h4>
+        </div>
+      {% empty %}
+        {% if user.is_authenticated %}
+        	No results, but you can <a href='/upload'>upload</a> some images.
+        {% else %}
+        	No results, but you can <a href='/login'>login</a> or <a href='/register'>register</a> to upload images.
+        {% endif %}
+      {% endfor %}
+
+{% endblock %}

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from website.models import Image
 from django.views.generic.detail import DetailView
 from website.views import NewestView, Top100View, UploadView, RegisterView,\
-    LoginView, SearchView
+    LoginView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
@@ -21,7 +21,8 @@ urlpatterns = patterns('',
                                              )
         ),
     url(r'^$', NewestView.as_view()),
-    url(r'^search/', SearchView.as_view()),
+    #url(r'^search/', SearchView.as_view()),
+    url(r'^search/', 'website.views.search'),
     url(r'^top100/$', Top100View.as_view()),
     url(r'^upload/$', UploadView.as_view()),
     url(r'^register/$', RegisterView.as_view()),
