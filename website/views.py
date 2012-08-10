@@ -9,6 +9,7 @@ from django.contrib.auth import login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+import operator
 
 
 def_pagination = 10
@@ -52,8 +53,11 @@ def search(request):
     if request.POST:
         form = SearchForm(request.POST)
         if form.is_valid():
-            query = form.cleaned_data['search_field']
-            results = Image.objects.filter(Q(title__iexact = query) | Q(description__icontains = query))
+            #Based on http://stackoverflow.com/questions/1957240/filter-using-q-object-with-dynamic-from-user/1957263#1957263
+            queryset = form.cleaned_data['search_field'].split()
+            query = reduce(operator.or_, ((Q(title__icontains = x) | Q(description__icontains = x)) for x in queryset))
+            #results = Image.objects.filter(Q(title__iexact = query) | Q(description__icontains = query))
+            results = Image.objects.filter(query)
         else:
             results = []
     else:
