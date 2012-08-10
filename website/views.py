@@ -42,8 +42,6 @@ class NewestView(ListView):
             # Process the data in form.cleaned_data
        #         return Image.objects.all()
         #        return Image.objects.filter(title__icontains = form.cleaned_data['search_field'])
-        # def get_query_set(self):
-        #    return super(MaleManager, self).get_query_set().filter(sex='M')
         #return Image.objects.all()
 
 
@@ -85,16 +83,27 @@ class Top100View(ListView):
         
         return context
     
-class DetailsView(DetailView):
-    queryset = Image.objects.all().order_by('-pub_date')
+class VoteUpView(DetailView):
+    model = Image
+    context_object_name='image'
     template_name = 'details.html'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super(NewestView, self).get_context_data(**kwargs)
-        context['selected_page'] = 'newest'
+        context = super(VoteUpView, self).get_context_data(**kwargs)
+        context['voteUp'] = True
         
         return context
+
+class VoteDownView(VoteUpView):
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(VoteDownView, self).get_context_data(**kwargs)
+        context['voteUp'] = False
+        
+        return context
+    
+#class VoteView(DetailView):
     
 class UploadView(CreateView):
     template_name = 'upload.html'

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from website.models import Image
 from django.views.generic.detail import DetailView
 from website.views import NewestView, Top100View, UploadView, RegisterView,\
-    LoginView
+    LoginView, VoteUpView, VoteDownView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
@@ -19,6 +19,10 @@ urlpatterns = patterns('',
                                             context_object_name='image',
                                             model=Image
                                              )
+        ),
+    url(r'^img/(?P<slug>[-a-zA-Z0-9]+)/\+/$', VoteUpView.as_view(                                             )
+        ),
+    url(r'^img/(?P<slug>[-a-zA-Z0-9]+)/\-/$', VoteDownView.as_view(                                             )
         ),
     url(r'^$', NewestView.as_view()),
     #url(r'^search/', SearchView.as_view()),
