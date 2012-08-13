@@ -18,6 +18,7 @@ class Image(models.Model):
     
     def save(self):
         self.slug = slugify(self.title)
-        self.pub_date = datetime.now()
+        if not self.pub_date:
+            self.pub_date = datetime.now()
         
         super(Image, self).save()

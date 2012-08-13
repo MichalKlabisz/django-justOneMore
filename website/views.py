@@ -11,6 +11,7 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext, Context
 import operator
 from django.contrib.auth.models import User
+from django.views.generic.base import TemplateView
 
 
 def_pagination = 10
@@ -77,7 +78,7 @@ def search(request):
     )
     
 class BestView(ListView):
-    queryset = Image.objects.all().order_by('-points')
+    queryset = Image.objects.all().order_by('-points', '-pub_date')
     template_name = 'list_of_images.html'
     paginate_by = def_pagination
 
@@ -87,17 +88,27 @@ class BestView(ListView):
         context['selected_page'] = 'best'
         
         return context
-    
-class VoteUpView(DetailView):
+
+class DetailsView(DetailView):
     model = Image
     context_object_name='image'
     template_name = 'details.html'
 
-    #def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-    #    context = super(VoteUpView, self).get_context_data(**kwargs)
+        context = super(DetailsView, self).get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated():
+            img = super(DetailsView, self).get_object()
+            user = Image.objects.filter(pk=img.pk).filter(who_voted__username = self.request.user.username)
+            
+            if user:
+                context['voted'] = True
         
-    #    return context
+        return context
+
+    
+class VoteUpView(DetailsView):
     
     #def get_object(self, queryset=None):
     #    img = super(VoteUpView, self).get_object()
@@ -154,6 +165,15 @@ class UploadView(CreateView):
         form.save_m2m()    
         self.object = img
         return HttpResponseRedirect(self.get_success_url())
+
+class AboutView(TemplateView):
+    template_name = 'about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+        context['selected_page'] = 'about'
+        
+        return context
     
 class LoginView(FormView):
     template_name = 'login.html'
