@@ -28,10 +28,10 @@
 	          {% else %}
 	          	<li><a href="/">Newest</a></li>
 	          {% endif %}
-	          {% if selected_page == 'top100' %}
-	          	<li class="selected"><a href="/top100">Top 100</a></li>
+	          {% if selected_page == 'best' %}
+	          	<li class="selected"><a href="/best">Best</a></li>
 	          {% else %}
-	          	<li><a href="/top100">Top 100</a></li>
+	          	<li><a href="/best">Best</a></li>
 	          {% endif %}
 	          {% if user.is_authenticated %}
 		          {% if selected_page == 'upload' %}

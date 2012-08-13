@@ -8,7 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template.context import RequestContext
+from django.template.context import RequestContext, Context
 import operator
 
 
@@ -75,15 +75,15 @@ def search(request):
         })
     )
     
-class Top100View(ListView):
-    queryset = Image.objects.all().order_by('title')
+class BestView(ListView):
+    queryset = Image.objects.all().order_by('-points')
     template_name = 'list_of_images.html'
     paginate_by = def_pagination
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super(Top100View, self).get_context_data(**kwargs)
-        context['selected_page'] = 'top100'
+        context = super(BestView, self).get_context_data(**kwargs)
+        context['selected_page'] = 'best'
         
         return context
     
@@ -95,17 +95,34 @@ class VoteUpView(DetailView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(VoteUpView, self).get_context_data(**kwargs)
-        context['voteUp'] = True
         
         return context
+    
+    #def get_object(self, queryset=None):
+    #    img = super(VoteUpView, self).get_object()
+    #    context = self.context
+    #    if context['voteUp'] == True:
+    #        img.points += 1
+    #    else:
+    #        img.points -= 1
+        #img.save()
+    #    return img
+    
+    def get_object(self, queryset=None):
+        img = super(VoteUpView, self).get_object()
+        img.points += 1
+        img.save()
+        
+        return img
+    
 
 class VoteDownView(VoteUpView):
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(VoteDownView, self).get_context_data(**kwargs)
-        context['voteUp'] = False
+    def get_object(self, queryset=None):
+        img = super(VoteUpView, self).get_object()
+        img.points -= 1
+        img.save()
         
-        return context
+        return img
     
 #class VoteView(DetailView):
     
