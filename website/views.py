@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext, Context
 import operator
+from django.contrib.auth.models import User
 
 
 def_pagination = 10
@@ -92,11 +93,11 @@ class VoteUpView(DetailView):
     context_object_name='image'
     template_name = 'details.html'
 
-    def get_context_data(self, **kwargs):
+    #def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super(VoteUpView, self).get_context_data(**kwargs)
+    #    context = super(VoteUpView, self).get_context_data(**kwargs)
         
-        return context
+    #    return context
     
     #def get_object(self, queryset=None):
     #    img = super(VoteUpView, self).get_object()
@@ -110,18 +111,27 @@ class VoteUpView(DetailView):
     
     def get_object(self, queryset=None):
         img = super(VoteUpView, self).get_object()
-        img.points += 1
-        img.save()
-        
+        #if not img.who_voted. (self.request.user):
+        #user = self.request.user.user
+        user = Image.objects.filter(pk=img.pk).filter(who_voted__username = self.request.user.username)
+        if not user:
+            img.who_voted.add(self.request.user)
+            img.points += 1
+            img.save()
+            
         return img
     
 
 class VoteDownView(VoteUpView):
     def get_object(self, queryset=None):
         img = super(VoteUpView, self).get_object()
-        img.points -= 1
-        img.save()
-        
+        #user = img.who_voted.get(username = self.request.user.username)
+        user = Image.objects.filter(pk=img.pk).filter(who_voted__username = self.request.user.username)
+        if not user:
+            img.who_voted.add(self.request.user)
+            img.points -= 1
+            img.save()
+            
         return img
     
 #class VoteView(DetailView):
